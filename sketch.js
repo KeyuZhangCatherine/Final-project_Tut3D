@@ -1,17 +1,23 @@
+//Defines the initial setup function for the sketch
 function setup() {
+
+  //Creates a canvas that fills the browser window
   createCanvas(windowWidth, windowHeight);
 
-  // Set up the background color
+  //Set up the background color
   background(229, 228, 240); 
   
-  // Calculate positions based on the 
+  //Calculates vertical positions for streets
   let yPosArray = calculatePositions([10, 50, 120, 150, 220, 250, 280, 340, 440], windowHeight);
+  //Calculates horizontal positions for streets
   let xPosArray = calculatePositions([10, 30, 70, 140, 300, 330, 420, 440, 480, 500], windowWidth);
   
+  //Creates horizontal streets on the canvas
   horizontalStreets(yPosArray);
+  //Creates vertical streets on the canvas
   verticalStreets(xPosArray);
   
-  // Create the blue blocks
+  //Creates blue colored blocks at specific positions
   createBlock(windowWidth * 0.1, windowHeight * 0.16, windowWidth * 0.06, windowHeight * 0.06, color(0, 0, 255));
   createBlock(windowWidth * 0.1, windowHeight * 0.7, windowWidth * 0.08, windowHeight * 0.08, color(0, 0, 255));
   createBlock(windowWidth * 0.32, windowHeight * 0.52, windowWidth * 0.06, windowHeight * 0.1, color(0, 0, 255));
@@ -33,42 +39,64 @@ function setup() {
   createBlock(windowWidth * 0.8, windowHeight * 0.04, windowWidth * 0.1, windowHeight * 0.06, color(169));
 }
 
+//Function to calculate and adjust positions based on the canvas size
 function calculatePositions(positionArray, canvasSize) {
-  
-  // Adjust the position into the suitable size
+  //Initializes an empty array for adjusted positions
   let adjustedPositions = [];
+
+  //Set for loop through each position in the array
   for (let pos of positionArray) {
+    //Adjusts the position based on the canvas size and adds it to the array
     adjustedPositions.push((pos / 500) * canvasSize);
   }
+
+  //Returns the array with adjusted positions
   return adjustedPositions;
 }
 
+//Function to create a block with position, width, height, and color
 function createBlock(x, y, w, h, c) {
+  //Set the fill color for the shape
   fill(c);
+  //Draw a rectangle
   rect(x, y, w, h);
 }
 
+//Function to create horizontal streets using the yPosArray
 function horizontalStreets(yPosArray) {
+  //For loop through each y position in the array
   for (let yPos of yPosArray) {
+    //Creates a row of blocks across the width of the canvas
     for (let i = 0; i < width; i += 20) {
+      //Generates a random number between 0 and 100
       let num = floor(random(101));
+      //Get a color based on the random number
       let c = colourMap(num);
+      //Create a block with the determined color at the current position
       createBlock(i, yPos, 20, 20, c);
     }
   }
 }
 
+//Function to create vertical streets using the xPosArray
 function verticalStreets(xPosArray) {
+  //For loop through each x position in the array
   for (let xPos of xPosArray) {
+    //Creates a row of blocks across the height of the canvas
     for (let i = 0; i < height; i += 20) {
+      //Generates a random number between 0 and 100
       let num = floor(random(101));
+      //Get a color based on the random number
       let c = colourMap(num);
+      //Create a block with the determined color at the current position
       createBlock(xPos, i, 20, 20, c);
     }
   }
 }
 
+//Function to map a number to a specific color
 function colourMap(num) {
+  //Check the range of the number and returns a corresponding color
   if (num >= 0 && num <= 65) {
 
     // Set as the yellow color
@@ -86,14 +114,6 @@ function colourMap(num) {
     // Set the grey color
     return color(169); 
   }
-}
-
-function draw() {
-  
-}
-
-function mouseClicked() {
-  
 }
 
 function windowResized() {
